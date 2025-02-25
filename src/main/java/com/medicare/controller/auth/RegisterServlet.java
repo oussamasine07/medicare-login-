@@ -1,6 +1,5 @@
 package com.medicare.controller.auth;
 
-import com.medicare.validation.RequestParam;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
