@@ -64,9 +64,14 @@
     </dependency>
 
     <dependency>
-      <groupId>org.glassfish</groupId>
-      <artifactId>jakarta.el</artifactId>
-      <version>5.0.0</version>
+      <groupId>com.password4j</groupId>
+      <artifactId>password4j</artifactId>
+      <version>1.8.2</version>
+    </dependency>
+    <dependency>
+      <groupId>io.github.cdimascio</groupId>
+      <artifactId>dotenv-java</artifactId>
+      <version>3.2.0</version>
     </dependency>
 
   </dependencies>

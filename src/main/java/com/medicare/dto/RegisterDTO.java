@@ -12,17 +12,27 @@ public class RegisterDTO {
     private String email;
 
     @NotBlank(message = "password is required")
-    @Min(4)
+    //@Min(4)
     private String password;
 
-    @NotBlank(message = "please confirm you password")
-    private String confirmPassword;
+    @NotBlank(message = "please select a role")
+    private String role;
 
-    public RegisterDTO (String fullName, String email, String password, String confirmPassword) {
+//    @NotBlank(message = "please confirm you password")
+//    private String confirmPassword;
+
+    public RegisterDTO (String fullName, String email, String password) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
-        this.confirmPassword = confirmPassword;
+//        this.confirmPassword = confirmPassword;
+    }
+
+    public RegisterDTO (String fullName, String email, String password, String role) {
+        this.fullName = fullName;
+        this.email = email;
+        this.password = password;
+        this.role = role;
     }
 
     public String getFullName() {
@@ -31,4 +41,9 @@ public class RegisterDTO {
     public String getEmail () {
         return email;
     }
+
+    public void setPassword (String password) { this.password = password; }
+    public String getPassword () { return this.password; }
+
+    public String getRole () { return this.role; }
 }

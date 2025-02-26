@@ -5,8 +5,14 @@ CREATE TABLE users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fullName VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
     role ENUM("doctor", "patient") NOT NULL
 );
+
+INSERT INTO uers
+    (fullName, email, password, role)
+VALUES
+    (?, ?, ?);
 
 CREATE TABLE doctors (
     id INT AUTO_INCREMENT PRIMARY KEY,

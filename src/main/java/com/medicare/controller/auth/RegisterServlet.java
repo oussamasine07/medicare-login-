@@ -1,6 +1,11 @@
 package com.medicare.controller.auth;
 
+import com.medicare.dao.UserDAO;
 import com.medicare.dto.RegisterDTO;
+import com.password4j.BcryptFunction;
+import com.password4j.Hash;
+import com.password4j.Password;
+import com.password4j.types.Bcrypt;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,16 +18,19 @@ import jakarta.validation.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.io.IOException;
 
 @WebServlet("/auth/register")
 public class RegisterServlet extends HttpServlet {
 
+    UserDAO userDAO = null;
+
+    public void init () {
+        userDAO = new UserDAO();
+    }
+
     private final ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     private final Validator validator = factory.getValidator();
-
-    public void init () {}
 
     protected void doGet (HttpServletRequest req, HttpServletResponse res)
         throws ServletException, IOException
@@ -38,9 +46,10 @@ public class RegisterServlet extends HttpServlet {
         String fullName = req.getParameter("fullName");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
-        String confirmPassword = req.getParameter("confirmPassword");
+        String role = req.getParameter("role");
+        //String confirmPassword = req.getParameter("confirmPassword");
 
-        RegisterDTO registerDTO = new RegisterDTO( fullName, email, password, confirmPassword );
+        RegisterDTO registerDTO = new RegisterDTO( fullName, email, password, role );
 
         Set<ConstraintViolation<RegisterDTO>> violations = validator.validate(registerDTO);
         HttpSession session = req.getSession();
@@ -55,8 +64,18 @@ public class RegisterServlet extends HttpServlet {
             session.setAttribute("old", registerDTO);
 
             res.sendRedirect("/medicare-login/auth/register");
+            //TODO: make passowrd match
+            // TODO: verify if email already exists
         } else {
 
+            // hash password
+            BcryptFunction bcrypt = BcryptFunction.getInstance(Bcrypt.B, 12);
+            Hash hash = Password.hash(registerDTO.getPassword())
+                    .addPepper("somethignrealyhard")
+                    .with(bcrypt);
+            registerDTO.setPassword(hash.getResult());
+            userDAO.insertIntoUsers( registerDTO );
+            // register new user
             res.sendRedirect("/medicare-login/auth/login");
         }
 
