@@ -25,5 +25,10 @@ public class RegisterDTO {
         this.confirmPassword = confirmPassword;
     }
 
-
+    public String getFullName() {
+        return fullName;
+    }
+    public String getEmail () {
+        return email;
+    }
 }

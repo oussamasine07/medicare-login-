@@ -7,8 +7,11 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collector;
 import java.io.IOException;
@@ -40,13 +43,22 @@ public class RegisterServlet extends HttpServlet {
         RegisterDTO registerDTO = new RegisterDTO( fullName, email, password, confirmPassword );
 
         Set<ConstraintViolation<RegisterDTO>> violations = validator.validate(registerDTO);
+        HttpSession session = req.getSession();
+        Map<String, String> errors = new HashMap<>();
 
         if (!violations.isEmpty()) {
-            violations.forEach(err -> System.out.println(err));
+            for (ConstraintViolation<RegisterDTO> violation : violations) {
+                errors.put(violation.getPropertyPath().toString(), violation.getMessage());
+            }
+
+            session.setAttribute("errors", errors);
+            session.setAttribute("old", registerDTO);
+
+            res.sendRedirect("/medicare-login/auth/register");
+        } else {
+
+            res.sendRedirect("/medicare-login/auth/login");
         }
-
-        res.sendRedirect("/medicare-login/auth/register");
-
 
 
     }
