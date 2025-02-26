@@ -7,19 +7,19 @@
             <form action="/medicare-login/auth/register" method="POST">
                 <div class="mb-4">
                     <label for="full-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name</label>
-                    <input type="text" id="full-name" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Your full name" name="fullName" required>
+                    <input type="text" id="full-name" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Your full name" name="fullName" >
                 </div>
                 <div class="mb-4">
                     <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
-                    <input type="email" id="email" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Your email" name="email" required>
+                    <input type="email" id="email" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Your email" name="email" >
                 </div>
                 <div class="mb-4">
                     <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
-                    <input type="password" id="password" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="password" placeholder="Your password" required>
+                    <input type="password" id="password" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="password" placeholder="Your password" >
                 </div>
                 <div class="mb-4">
                     <label for="password-cofirm" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confirm password</label>
-                    <input type="password" id="password-cofirm" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="confirmPassword" placeholder="Confirm password" required>
+                    <input type="password" id="password-cofirm" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="confirmPassword" placeholder="Confirm password" >
                 </div>
 
                 <a href="#" class="text-xs text-gray-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 block mb-4">Forgot
