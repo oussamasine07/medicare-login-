@@ -35,6 +35,7 @@ public class RegisterServlet extends HttpServlet {
     protected void doGet (HttpServletRequest req, HttpServletResponse res)
         throws ServletException, IOException
     {
+        System.out.println(req.getSession());
         RequestDispatcher rd = req.getRequestDispatcher("/pages/auth/register.jsp");
         rd.forward(req, res);
     }
