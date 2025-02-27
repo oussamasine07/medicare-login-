@@ -6,4 +6,4 @@
     </div>
 
 
-<jsp:include page="/pages/partials/header.jsp" />
+<jsp:include page="/pages/partials/footer.jsp" />

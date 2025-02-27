@@ -24,26 +24,37 @@ public class CheckIfAuth implements Filter {
         httpRes = (HttpServletResponse) response;
 
         String path = httpReq.getRequestURI().substring(httpReq.getContextPath().length());
-        System.out.println("start filter");
-        System.out.println(path);
 
-        if (path.startsWith("/auth/")) {
-            System.out.println("starts with auth");
-            chain.doFilter(request, response);
-            return;
-        }
+//        if (path.startsWith("/auth/")) {
+//            chain.doFilter(request, response);
+//            return;
+//        }
 
         HttpSession session = httpReq.getSession(false);
         boolean isLoggedInUser = (session != null && session.getAttribute("user") != null);
 
-        String loginURI = httpReq.getContextPath() + "/login";
-        boolean isLoginRequest = httpReq.getRequestURI().equals(loginURI);
-        boolean isLoginPage = httpReq.getRequestURI().endsWith("/login");
+        String loginURI = httpReq.getContextPath() + "/auth/login";
+        String registerURI = httpReq.getContextPath() + "/auth/register";
+        boolean isAuthRequest = (httpReq.getRequestURI().equals(loginURI) || httpReq.getRequestURI().equals(registerURI));
+        boolean isAuthPage = (httpReq.getRequestURI().endsWith("/login") || httpReq.getRequestURI().endsWith("/register"));
+//        String loginPage = httpReq.getRequestURI();
 
-        if ( isLoggedInUser && (isLoginRequest || isLoginPage) ) {
+//        System.out.println("-----------------------------------------------");
+//        System.out.println("login uri " + loginURI);
+//        System.out.println("-----------------------------------------------");
+//
+//        System.out.println("is loged in " + isLoggedInUser);
+//        System.out.println("is login request " + isLoginRequest);
+//        System.out.println("login page " + loginPage);
+//        System.out.println("is login page " + isLoginPage);
+
+//        && (isLoginRequest || isLoginPage)
+
+        if ( isLoggedInUser && (isAuthRequest || isAuthPage) ) {
             System.out.println("check if user already logged in ");
             httpRes.sendRedirect(httpReq.getContextPath() + "/dashboard");
-        } else if ( !isLoggedInUser && isLoggedInRequired() ) {
+        }
+        else if ( !isLoggedInUser && isLoggedInRequired() ) {
             System.out.println("check user not logged in");
             httpRes.sendRedirect(httpReq.getContextPath() + "/auth/login");
         } else {
