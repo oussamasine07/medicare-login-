@@ -6,12 +6,12 @@ public class Doctor extends User {
     private String phone;
     private String address;
 
-    public Doctor (int id, String fullName, String email ) {
-        super(id, fullName, email);
+    public Doctor (int id, String fullName, String email, String password, Role role ) {
+        super(id, fullName, email, password, role);
     }
 
-    public Doctor (int id, String fullName, String email, String specialty, String phone, String address ) {
-        super(id, fullName, email);
+    public Doctor (int id, String fullName, String email, String specialty, String phone, String address, String password, Role role ) {
+        super(id, fullName, email, password, role);
         this.specialty = specialty;
         this.phone = phone;
         this.address = address;

@@ -30,3 +30,6 @@ CREATE TABLE patients (
     address VARCHAR(255) NULL,
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+SELECT * FROM users
+WHERE email = ?;

@@ -1,5 +1,16 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <jsp:include page="/pages/partials/header.jsp" />
+<%@ page import="java.util.Map" %>
+
+    <%
+        // Get errors from session and remove them after displaying
+        Map<String, String> errors = (Map<String, String>) session.getAttribute("errors");
+        session.removeAttribute("errors");
+
+        // Get user input from session and remove it after displaying
+        com.medicare.dto.LoginDTO old = (com.medicare.dto.LoginDTO) session.getAttribute("old");
+        session.removeAttribute("old");
+    %>
 
     <div class="min-h-screen flex items-center justify-center w-full dark:bg-gray-950">
         <div class="bg-white dark:bg-gray-900 shadow-md rounded-lg px-8 py-6 w-2/5">
@@ -7,14 +18,27 @@
             <form action="/medicare-login/auth/login" method="post">
                 <div class="mb-4">
                     <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
-                    <input type="email" id="email" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Your email" name="email">
+                    <input
+                        type="text"
+                        id="email"
+                        class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Your email"
+                        name="email"
+                        value ="<%= old != null ? old.getEmail() : "" %>"
+                    >
+                    <% if (errors != null && errors.containsKey("email")) { %>
+                        <p class="text-red-500 text-xs italic mt-2"><%= errors.get("email") %></p>
+                    <% } %>
                 </div>
                 <div class="mb-4">
                     <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
                     <input type="password" id="password" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Your password" name="password">
-                    <a href="#"
-                        class="text-xs text-gray-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Forgot
-                        Password?</a>
+                    <% if (errors != null && errors.containsKey("email")) { %>
+                        <p class="text-red-500 text-xs italic mt-2"><%= errors.get("password") %></p>
+                    <% } %>
+                </div>
+                <div class="my-4 flex justify-center items-center">
+                    <a href="#"class="text-xs text-gray-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Forgot Password?</a>
                 </div>
                 <div class="flex items-center justify-between mb-4">
                     <div class="flex items-center">
