@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet {
             // validate if email exists
             User user = userDAO.getUserByEmail(email);
             if ( user == null ) {
-                session.setAttribute("userNotFound", "this user is not found");
+                session.setAttribute("errorCredentail", "this user is not found");
                 res.sendRedirect("/medicare-login/auth/login");
             } else {
                 // validate password
@@ -80,11 +80,12 @@ public class LoginServlet extends HttpServlet {
                         .addPepper("somethignrealyhard")
                         .with(bcrypt);
                 if ( !isMatch ) {
-                    session.setAttribute("pwErr", "Invalid credentials");
+                    session.setAttribute("errorCredentail", "Invalid credentials");
                     res.sendRedirect("/medicare-login/auth/login");
                 } else {
                     // authenticate user and redirect
                     session.setAttribute("user", user);
+
                     res.sendRedirect(req.getContextPath() + "/dashboard");
                 }
             }
