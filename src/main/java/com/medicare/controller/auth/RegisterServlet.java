@@ -2,6 +2,7 @@ package com.medicare.controller.auth;
 
 import com.medicare.dao.UserDAO;
 import com.medicare.dto.RegisterDTO;
+import com.medicare.model.User;
 import com.password4j.BcryptFunction;
 import com.password4j.Hash;
 import com.password4j.Password;
@@ -44,6 +45,8 @@ public class RegisterServlet extends HttpServlet {
         throws ServletException, IOException
     {
 
+        User user = null;
+
         String fullName = req.getParameter("fullName");
         String email = req.getParameter("email");
         String password = req.getParameter("password");
@@ -66,18 +69,25 @@ public class RegisterServlet extends HttpServlet {
 
             res.sendRedirect("/medicare-login/auth/register");
             //TODO: make passowrd match
-            // TODO: verify if email already exists
-        } else {
 
-            // hash password
-            BcryptFunction bcrypt = BcryptFunction.getInstance(Bcrypt.B, 12);
-            Hash hash = Password.hash(registerDTO.getPassword())
-                    .addPepper("somethignrealyhard")
-                    .with(bcrypt);
-            registerDTO.setPassword(hash.getResult());
-            userDAO.insertIntoUsers( registerDTO );
-            // register new user
-            res.sendRedirect("/medicare-login/auth/login");
+        } else {
+            // TODO: verify if email already exists
+            user = userDAO.getUserByEmail(email);
+            if ( user != null ) {
+                session.setAttribute("errorUser", "this email is already taken");
+                res.sendRedirect("/medicare-login/auth/register");
+            } else {
+                // hash password
+                BcryptFunction bcrypt = BcryptFunction.getInstance(Bcrypt.B, 12);
+                Hash hash = Password.hash(registerDTO.getPassword())
+                        .addPepper("somethignrealyhard")
+                        .with(bcrypt);
+                registerDTO.setPassword(hash.getResult());
+                userDAO.insertIntoUsers( registerDTO );
+                session.setAttribute("registerSuccess", "Register success, Please login");
+                res.sendRedirect("/medicare-login/auth/login");
+            }
+
         }
 
 

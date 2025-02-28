@@ -46,4 +46,8 @@ public class RegisterDTO {
     public String getPassword () { return this.password; }
 
     public String getRole () { return this.role; }
+
+//    public String getConfirmPassword() {
+//        return this.confirmPassword;
+//    }
 }
