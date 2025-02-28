@@ -1,25 +1,86 @@
 <%@ taglib uri="jakarta.tags.core" prefix="c" %>
 <jsp:include page="/pages/partials/header.jsp" />
+<%@ page import="java.util.Map" %>
+
+    <%
+        // Get errors from session and remove them after displaying
+        Map<String, String> errors = (Map<String, String>) session.getAttribute("errors");
+        //System.out.println("errors are" + errors);
+        session.removeAttribute("errors");
+
+        // Get user input from session and remove it after displaying
+        com.medicare.dto.RegisterDTO old = (com.medicare.dto.RegisterDTO) session.getAttribute("old");
+        session.removeAttribute("old");
+
+        String errorUser = (String) session.getAttribute("errorUser");
+        session.removeAttribute("errorUser");
+    %>
 
     <div class="min-h-screen flex items-center justify-center w-full dark:bg-gray-950">
         <div class="bg-white dark:bg-gray-900 shadow-md rounded-lg px-8 py-6 w-2/5">
+
+            <% if ( errorUser != null ) { %>
+                <div id="alert-2" class="flex items-center p-4 mb-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+                  <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
+                  </svg>
+                  <span class="sr-only">Info</span>
+                  <div class="ms-3 text-sm font-medium">
+                    <%= errorUser %>
+                  </div>
+                  <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-red-50 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-red-400 dark:hover:bg-gray-700" data-dismiss-target="#alert-2" aria-label="Close">
+                    <span class="sr-only">Close</span>
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                  </button>
+                </div>
+            <% } %>
+
             <h1 class="text-2xl font-bold text-center mb-4 dark:text-gray-200">Welcome to the app</h1>
             <form action="/medicare-login/auth/register" method="POST">
                 <div class="mb-4">
                     <label for="full-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Full Name</label>
-                    <input type="text" id="full-name" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Your full name" name="fullName" >
+                    <input
+                        type="text" id="full-name"
+                        class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Your full name"
+                        name="fullName"
+                        value ="<%= old != null ? old.getFullName() : "" %>"
+                    >
+                    <% if (errors != null && errors.containsKey("fullName")) { %>
+                        <p class="text-red-500 text-xs italic mt-2"><%= errors.get("fullName") %></p>
+                    <% } %>
                 </div>
                 <div class="mb-4">
                     <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
-                    <input type="email" id="email" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" placeholder="Your email" name="email" >
+                    <input
+                        type="text" id="email"
+                        class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Your email"
+                        name="email"
+                        value ="<%= old != null ? old.getEmail() : "" %>"
+                    >
+                    <% if (errors != null && errors.containsKey("email")) { %>
+                        <p class="text-red-500 text-xs italic mt-2"><%= errors.get("email") %></p>
+                    <% } %>
+                </div>
+                <div class="mb-4">
+                    <label for="password-cofirm" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Choose role</label>
+                    <select class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500" name="role">
+                          <option value="">Role</option>
+                          <option value="doctor">Doctor</option>
+                          <option value="patient">Patient</option>
+                    </select>
+                    <% if (errors != null && errors.containsKey("confirmPassword")) { %>
+                        <p class="text-red-500 text-xs italic mt-2"><%= errors.get("confirmPassword") %></p>
+                    <% } %>
                 </div>
                 <div class="mb-4">
                     <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password</label>
                     <input type="password" id="password" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="password" placeholder="Your password" >
-                </div>
-                <div class="mb-4">
-                    <label for="password-cofirm" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confirm password</label>
-                    <input type="password" id="password-cofirm" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="confirmPassword" placeholder="Confirm password" >
+                    <% if (errors != null && errors.containsKey("password")) { %>
+                        <p class="text-red-500 text-xs italic mt-2"><%= errors.get("password") %></p>
+                    <% } %>
                 </div>
 
                 <a href="#" class="text-xs text-gray-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 block mb-4">Forgot
