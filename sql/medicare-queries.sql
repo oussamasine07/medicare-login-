@@ -33,3 +33,54 @@ CREATE TABLE patients (
 
 SELECT * FROM users
 WHERE email = ?;
+
+CREATE TABLE appointments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    patient_id INT NOT NULL,
+    doctor_id INT NOT NULL,
+    appDate DATE NOT NULL,
+    appTime TIME NOT NULL,
+    motif VARCHAR(255) NOT NULL,
+    is_canceled BOOLEAN NOT NULL DEFAULT FALSE,
+    is_done BOOLEAN NOT NULL DEFAULT FALSE,
+    FOREIGN KEY(patient_id) REFERENCES patients(id) ON DELETE CASCADE,
+    FOREIGN KEY(doctor_id) REFERENCES doctors(id) ON DELETE CASCADE
+);
+
+SELECT * FROM doctors
+WHERE id = ?;
+
+-- select appointments by patient id
+SELECT * FROM appointments
+WHERE patient_id = ?;
+
+-- select appointments by doctor id
+SELECT * FROM appointments
+WHERE doctor_id = ?;
+
+INSERT INTO appointments
+    ( patient_id, doctor_id, appDate, appTime, motif )
+VALUES
+    (2, 7, "2025-11-21", "12:00:00", "this is test motif");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

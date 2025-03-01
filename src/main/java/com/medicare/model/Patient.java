@@ -9,6 +9,10 @@ public class Patient extends User {
         super(id, fullName, email, password, role);
     }
 
+    public Patient (int id, String fullName, String email, Role role) {
+        super(id, fullName, email, role);
+    }
+
     public Patient (int id, String fullName, String email, String phone, String address, String password, Role role ) {
         super(id, fullName, email, password, role);
         this.phone = phone;

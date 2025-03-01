@@ -10,6 +10,10 @@ public class Doctor extends User {
         super(id, fullName, email, password, role);
     }
 
+    public Doctor (int id, String fullName, String email, Role role ) {
+        super(id, fullName, email, role);
+    }
+
     public Doctor (int id, String fullName, String email, String specialty, String phone, String address, String password, Role role ) {
         super(id, fullName, email, password, role);
         this.specialty = specialty;
