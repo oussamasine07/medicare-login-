@@ -42,7 +42,10 @@
 
                     <% if (user != null) { %>
                         <li>
-                            <a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:p-0">profile</a>
+                            <a href="#" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:p-0">Profile</a>
+                        </li>
+                        <li>
+                            <a href="/medicare-login/appointment" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:p-0">Appointment</a>
                         </li>
                         <li>
                             <a href="/medicare-login/dashboard" class="block py-2 px-3 text-white bg-blue-700 rounded-sm md:bg-transparent md:p-0">Dashboard</a>
