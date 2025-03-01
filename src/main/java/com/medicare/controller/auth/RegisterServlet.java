@@ -51,18 +51,25 @@ public class RegisterServlet extends HttpServlet {
         String email = req.getParameter("email");
         String password = req.getParameter("password");
         String role = req.getParameter("role");
-        //String confirmPassword = req.getParameter("confirmPassword");
+        String confirmPassword = req.getParameter("confirmPassword");
 
-        RegisterDTO registerDTO = new RegisterDTO( fullName, email, password, role );
+        RegisterDTO registerDTO = new RegisterDTO( fullName, email, password, confirmPassword, role );
 
         Set<ConstraintViolation<RegisterDTO>> violations = validator.validate(registerDTO);
         HttpSession session = req.getSession();
         Map<String, String> errors = new HashMap<>();
 
+        violations.forEach(err -> {
+            System.out.println("Field: " + err.getPropertyPath().toString());
+            System.out.println("Message: " + err.getMessage());
+        });
+
         if (!violations.isEmpty()) {
             for (ConstraintViolation<RegisterDTO> violation : violations) {
                 errors.put(violation.getPropertyPath().toString(), violation.getMessage());
             }
+
+
 
             session.setAttribute("errors", errors);
             session.setAttribute("old", registerDTO);
