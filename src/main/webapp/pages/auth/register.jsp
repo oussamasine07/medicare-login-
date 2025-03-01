@@ -71,8 +71,8 @@
                           <option value="doctor">Doctor</option>
                           <option value="patient">Patient</option>
                     </select>
-                    <% if (errors != null && errors.containsKey("confirmPassword")) { %>
-                        <p class="text-red-500 text-xs italic mt-2"><%= errors.get("confirmPassword") %></p>
+                    <% if (errors != null && errors.containsKey("role")) { %>
+                        <p class="text-red-500 text-xs italic mt-2"><%= errors.get("role") %></p>
                     <% } %>
                 </div>
                 <div class="mb-4">
@@ -80,6 +80,13 @@
                     <input type="password" id="password" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="password" placeholder="Your password" >
                     <% if (errors != null && errors.containsKey("password")) { %>
                         <p class="text-red-500 text-xs italic mt-2"><%= errors.get("password") %></p>
+                    <% } %>
+                </div>
+                <div class="mb-4">
+                    <label for="confirmPassword" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Confirm Password</label>
+                    <input type="password" id="confirmPassword" class="shadow-sm text-white rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" name="confirmPassword" placeholder="Confirm password" >
+                    <% if (errors != null && errors.containsKey("confirmPassword")) { %>
+                        <p class="text-red-500 text-xs italic mt-2"><%= errors.get("confirmPassword") %></p>
                     <% } %>
                 </div>
 

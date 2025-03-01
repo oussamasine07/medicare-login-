@@ -2,6 +2,7 @@ package com.medicare.dto;
 
 import jakarta.validation.constraints.*;
 
+@PasswordMatch
 public class RegisterDTO {
 
     @NotBlank(message = "Full name is required")
@@ -18,21 +19,22 @@ public class RegisterDTO {
     @NotBlank(message = "please select a role")
     private String role;
 
-//    @NotBlank(message = "please confirm you password")
-//    private String confirmPassword;
+    @NotBlank(message = "please confirm you password")
+    private String confirmPassword;
 
-    public RegisterDTO (String fullName, String email, String password) {
-        this.fullName = fullName;
-        this.email = email;
-        this.password = password;
+//    public RegisterDTO (String fullName, String email, String password) {
+//        this.fullName = fullName;
+//        this.email = email;
+//        this.password = password;
 //        this.confirmPassword = confirmPassword;
-    }
+//    }
 
-    public RegisterDTO (String fullName, String email, String password, String role) {
+    public RegisterDTO (String fullName, String email, String password, String confirmPassword, String role) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
         this.role = role;
+        this.confirmPassword = confirmPassword;
     }
 
     public String getFullName() {
@@ -47,7 +49,7 @@ public class RegisterDTO {
 
     public String getRole () { return this.role; }
 
-//    public String getConfirmPassword() {
-//        return this.confirmPassword;
-//    }
+    public String getConfirmPassword() {
+        return this.confirmPassword;
+    }
 }
